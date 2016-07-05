@@ -1,7 +1,7 @@
 # App Rating Alert
 Show an alert to rate your APP.
 
-![Alt text](ReadmeImages/Screen1.png?raw=true "Alert" =100x)
+![Alt text](ReadmeImages/Screen1.png?raw=true "Alert"){ width: 100px; }
 
 
 
