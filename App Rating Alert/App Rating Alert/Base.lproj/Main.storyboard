@@ -19,18 +19,33 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gW8-Ey-OXm">
                                 <rect key="frame" x="263" y="285" width="75" height="30"/>
-                                <state key="normal" title="Show Alert"/>
+                                <state key="normal" title="Show Alert immediatly"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="124" y="285" width="154" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="testShowAlert:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TPG-zX-ymP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76S-QW-mXR">
+                                <rect key="frame" x="130" y="351" width="340" height="30"/>
+                                <state key="normal" title="View appears (Count down to show Rate Alert)"/>
+                                <connections>
+                                    <action selector="testViewAppears:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CpG-XD-9YR"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gW8-Ey-OXm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="LZb-hx-dYo"/>
+                            <constraint firstItem="76S-QW-mXR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bAj-ud-UJM"/>
+                            <constraint firstItem="76S-QW-mXR" firstAttribute="top" secondItem="gW8-Ey-OXm" secondAttribute="bottom" constant="36" id="i9p-Xl-yUw"/>
                             <constraint firstItem="gW8-Ey-OXm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sbI-Df-RZv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="countDownButton" destination="76S-QW-mXR" id="R5F-Pg-2aB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

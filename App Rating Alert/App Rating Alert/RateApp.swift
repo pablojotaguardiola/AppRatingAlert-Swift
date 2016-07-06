@@ -20,18 +20,32 @@ let RATE_CNT_KEY = "RATE_CNT_KEY"
 var defaults: NSUserDefaults!
 var viewLoaded: Int = 0
 
-func rateApp(view: UIViewController) {
+func showRateAlertInmediatly (view: UIViewController) {
+    rateApp(view, immediatly: true)
+}
+
+func rateApp(view: UIViewController, immediatly: Bool?) {
     if  defaults == nil {
         defaults = NSUserDefaults()
         viewLoaded = defaults.objectForKey(RATE_CNT_KEY) == nil ? 0 : defaults.objectForKey(RATE_CNT_KEY) as! Int
     }
     
-    viewLoaded += 1
+    var immed = false
+    
+    if immediatly != nil {
+        immed = immediatly!
+    }
+    
+    if !immed {
+        viewLoaded += 1
+    }
     
     defaults.setInteger(viewLoaded, forKey: "viewLoadedCntRateApp")
     
-    if viewLoaded % showRateTimes == 0{
-        if (defaults.objectForKey(RATED_DEFAULT_KEY) == nil) {
+    if viewLoaded % showRateTimes == 0 || immed {
+        if (defaults.objectForKey(RATED_DEFAULT_KEY) == nil || immed) {
+            viewLoaded = 0
+            
             let rateAlert = UIAlertController(title: "Please, Rate Us!", message: "How much do you like this App?", preferredStyle: .Alert)
             
             let fiveStarsAction = UIAlertAction(title: "★★★★★", style: .Default, handler: {(alert: UIAlertAction!) in goToRate(view)})
@@ -76,6 +90,16 @@ func noMoreRate () {
     let defaults = NSUserDefaults()
     
     defaults.setBool(true, forKey: RATED_DEFAULT_KEY)
+}
+
+func getRateAlertCountdown() -> Int {
+    defaults = NSUserDefaults()
+    if defaults.objectForKey(RATED_DEFAULT_KEY) == nil {
+        return showRateTimes - viewLoaded
+    }
+    else {
+        return 0
+    }
 }
 
 func showCloseAlert (view: UIViewController, title: String, message: String) {
