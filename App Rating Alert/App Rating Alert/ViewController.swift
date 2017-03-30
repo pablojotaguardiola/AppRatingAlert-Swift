@@ -16,12 +16,12 @@ class ViewController: UIViewController {
         setCountDownButton()
     }
 
-    @IBAction func testShowAlert(sender: AnyObject) {
+    @IBAction func testShowAlert(_ sender: AnyObject) {
         showRateAlertInmediatly(self)
     }
     
     
-    @IBAction func testViewAppears(sender: AnyObject) {
+    @IBAction func testViewAppears(_ sender: AnyObject) {
         rateApp(self, immediatly: nil)
         
         setCountDownButton()
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         if count >= 0 {
             let rateString = "Show Alert countdown (\(count) clicks left)"
             
-            countDownButton.setTitle(rateString, forState: .Normal)
+            countDownButton.setTitle(rateString, for: UIControlState())
         }
     }
 }

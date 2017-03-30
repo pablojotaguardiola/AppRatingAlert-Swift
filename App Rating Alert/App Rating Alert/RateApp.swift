@@ -17,17 +17,17 @@ let showRateTimes = 3 //Times rateApp() called before alert shows
 let RATED_DEFAULT_KEY = "RATED_APP_KEY"
 let RATE_CNT_KEY = "RATE_CNT_KEY"
 
-var defaults: NSUserDefaults!
+var defaults: UserDefaults!
 var viewLoaded: Int = 0
 
-func showRateAlertInmediatly (view: UIViewController) {
+func showRateAlertInmediatly (_ view: UIViewController) {
     rateApp(view, immediatly: true)
 }
 
-func rateApp(view: UIViewController, immediatly: Bool?) {
+func rateApp(_ view: UIViewController, immediatly: Bool?) {
     if  defaults == nil {
-        defaults = NSUserDefaults()
-        viewLoaded = defaults.objectForKey(RATE_CNT_KEY) == nil ? 0 : defaults.objectForKey(RATE_CNT_KEY) as! Int
+        defaults = UserDefaults()
+        viewLoaded = defaults.object(forKey: RATE_CNT_KEY) == nil ? 0 : defaults.object(forKey: RATE_CNT_KEY) as! Int
     }
     
     var immed = false
@@ -40,61 +40,61 @@ func rateApp(view: UIViewController, immediatly: Bool?) {
         viewLoaded += 1
     }
     
-    defaults.setInteger(viewLoaded, forKey: "viewLoadedCntRateApp")
+    defaults.set(viewLoaded, forKey: "viewLoadedCntRateApp")
     
     if viewLoaded % showRateTimes == 0 || immed {
-        if (defaults.objectForKey(RATED_DEFAULT_KEY) == nil || immed) {
+        if (defaults.object(forKey: RATED_DEFAULT_KEY) == nil || immed) {
             viewLoaded = 0
             
-            let rateAlert = UIAlertController(title: "Please, Rate Us!", message: "How much do you like this App?", preferredStyle: .Alert)
+            let rateAlert = UIAlertController(title: "Please, Rate Us!", message: "How much do you like this App?", preferredStyle: .alert)
             
-            let fiveStarsAction = UIAlertAction(title: "★★★★★", style: .Default, handler: {(alert: UIAlertAction!) in goToRate(view)})
+            let fiveStarsAction = UIAlertAction(title: "★★★★★", style: .default, handler: {(alert: UIAlertAction!) in goToRate(view)})
             rateAlert.addAction(fiveStarsAction)
-            let fourStarsAction = UIAlertAction(title: "★★★★✩", style: .Default, handler: {(alert: UIAlertAction!) in goToRate(view)})
+            let fourStarsAction = UIAlertAction(title: "★★★★✩", style: .default, handler: {(alert: UIAlertAction!) in goToRate(view)})
             rateAlert.addAction(fourStarsAction)
-            let threeStarsAction = UIAlertAction(title: "★★★✩✩", style: .Default, handler: {(alert: UIAlertAction!) in showCloseAlert(view, title: "Thank you", message: "We appreciate your opinion.")
+            let threeStarsAction = UIAlertAction(title: "★★★✩✩", style: .default, handler: {(alert: UIAlertAction!) in showCloseAlert(view, title: "Thank you", message: "We appreciate your opinion.")
                 noMoreRate()
             })
             rateAlert.addAction(threeStarsAction)
-            let twoStarsAction = UIAlertAction(title: "★★✩✩✩", style: .Default, handler: {(alert: UIAlertAction!) in showCloseAlert(view, title: "Thank you", message: "We appreciate your opinion.")
+            let twoStarsAction = UIAlertAction(title: "★★✩✩✩", style: .default, handler: {(alert: UIAlertAction!) in showCloseAlert(view, title: "Thank you", message: "We appreciate your opinion.")
                 noMoreRate()
             })
             rateAlert.addAction(twoStarsAction)
-            let oneStarsAction = UIAlertAction(title: "★✩✩✩✩", style: .Default, handler: {(alert: UIAlertAction!) in showCloseAlert(view, title: "Thank you", message: "We appreciate your opinion.")
+            let oneStarsAction = UIAlertAction(title: "★✩✩✩✩", style: .default, handler: {(alert: UIAlertAction!) in showCloseAlert(view, title: "Thank you", message: "We appreciate your opinion.")
                 noMoreRate()
             })
             rateAlert.addAction(oneStarsAction)
-            let notNowAction = UIAlertAction(title: "Not Now", style: .Default, handler: nil)
+            let notNowAction = UIAlertAction(title: "Not Now", style: .default, handler: nil)
             rateAlert.addAction(notNowAction)
-            let noThanksAction = UIAlertAction(title: "Don't Ask Again", style: .Default, handler: {(alert: UIAlertAction!) in noMoreRate()})
+            let noThanksAction = UIAlertAction(title: "Don't Ask Again", style: .default, handler: {(alert: UIAlertAction!) in noMoreRate()})
             rateAlert.addAction(noThanksAction)
             
-            view.presentViewController(rateAlert, animated: true, completion: nil)
+            view.present(rateAlert, animated: true, completion: nil)
         }
     }
 }
 
-func goToRate(view: UIViewController) {
-    let openStoreAlert = UIAlertController(title: "Great", message: "Now, App Store will open and you just have to write a review in 'Reviews' tabs.", preferredStyle: .Alert)
-    let openStoreAction = UIAlertAction(title: "Go To App Store", style: .Default, handler: {(slert: UIAlertAction) in
+func goToRate(_ view: UIViewController) {
+    let openStoreAlert = UIAlertController(title: "Great", message: "Now, App Store will open and you just have to write a review in 'Reviews' tabs.", preferredStyle: .alert)
+    let openStoreAction = UIAlertAction(title: "Go To App Store", style: .default, handler: {(slert: UIAlertAction) in
         noMoreRate()
-        UIApplication.sharedApplication().openURL(NSURL(string : "itms-apps://itunes.apple.com/app/id\(APP_ID)")!);
+        UIApplication.shared.openURL(URL(string : "itms-apps://itunes.apple.com/app/id\(APP_ID)")!);
     })
     
     openStoreAlert.addAction(openStoreAction)
     
-    view.presentViewController(openStoreAlert, animated: true, completion: nil)
+    view.present(openStoreAlert, animated: true, completion: nil)
 }
 
 func noMoreRate () {
-    let defaults = NSUserDefaults()
+    let defaults = UserDefaults()
     
-    defaults.setBool(true, forKey: RATED_DEFAULT_KEY)
+    defaults.set(true, forKey: RATED_DEFAULT_KEY)
 }
 
 func getRateAlertCountdown() -> Int {
-    defaults = NSUserDefaults()
-    if defaults.objectForKey(RATED_DEFAULT_KEY) == nil {
+    defaults = UserDefaults()
+    if defaults.object(forKey: RATED_DEFAULT_KEY) == nil {
         return showRateTimes - viewLoaded
     }
     else {
@@ -102,10 +102,10 @@ func getRateAlertCountdown() -> Int {
     }
 }
 
-func showCloseAlert (view: UIViewController, title: String, message: String) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-    let alertAction = UIAlertAction(title: "Close", style: .Default, handler: nil)
+func showCloseAlert (_ view: UIViewController, title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let alertAction = UIAlertAction(title: "Close", style: .default, handler: nil)
     alert.addAction(alertAction)
     
-    view.presentViewController(alert, animated: true, completion: nil)
+    view.present(alert, animated: true, completion: nil)
 }
